@@ -16,7 +16,10 @@ router.get(
 	FeedbackController.getSingleFeedback
 );
 // Update a feedback
-router.put(['/:id', '/feedbackproduct/:id'], FeedbackController.updateFeedback);
+router.patch(
+	['/:id', '/feedbackproduct/:id'],
+	FeedbackController.updateFeedback
+);
 // Show comments within feedback
 router.get(
 	['/:id/comments', '/feedbackproduct/:id/comments'],
@@ -29,8 +32,6 @@ router.delete(
 	['/:id', '/feedbackproduct/:id'],
 	FeedbackController.deleteFeedback
 );
-// Upvote Feedback
-router.put([':/id', '/feedbackproduct/:id'], FeedbackController.upvoteFeedback);
 // USER
 // Create User
 router.post('/users', UserController.createUser);

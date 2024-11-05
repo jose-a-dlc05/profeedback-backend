@@ -2,7 +2,7 @@
 	"name": "product-feedback-backend",
 	"version": "1.0.0",
 	"description": "This will be the back end to a product feedback application ",
-	"main": "server.js",
+	"main": "index.js",
 	"scripts": {
 		"start": "node dist/index.js",
 		"postinstall": "tsc",

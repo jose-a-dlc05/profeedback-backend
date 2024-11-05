@@ -4,6 +4,7 @@ const feedbackService = require('../services/feedbackService');
 class FeedbackController {
 	getFeedback = async (req: any, res: any) => {
 		try {
+			console.log('controller: getFeedback');
 			return res.status(200).json(await feedbackService.getFeedback());
 		} catch (err) {
 			console.error(err);
@@ -51,14 +52,6 @@ class FeedbackController {
 			const id: string = req.params.id;
 			await feedbackService.deleteFeedback(id);
 			return res.status(204).send('Feedback Deleted');
-		} catch (err) {
-			console.error(err);
-		}
-	};
-	upvoteFeedback = async (req: any, res: any) => {
-		try {
-			const id: string = req.params.id;
-			await feedbackService.upvoteFeedback(id);
 		} catch (err) {
 			console.error(err);
 		}

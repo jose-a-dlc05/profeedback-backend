@@ -42,7 +42,7 @@ export async function seed(knex: Knex): Promise<void> {
 		{
 			id: '0b721ee7-a93c-4c13-9815-d3907ec8e9a0',
 			title: 'Ability to follow others',
-			category: 'feature',
+			category: 'Feature',
 			upvotes: 42,
 			status: 'suggestion',
 			description: 'Stay updated on comments and solutions other people post.',

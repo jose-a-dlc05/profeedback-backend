@@ -83,6 +83,7 @@ class FeedbackDAO {
 		title: string,
 		category: string,
 		status: string,
+		upvotes: number,
 		description: string,
 		id: string
 	) {
@@ -91,6 +92,7 @@ class FeedbackDAO {
 			title,
 			category,
 			status,
+			upvotes,
 			description,
 		});
 	}

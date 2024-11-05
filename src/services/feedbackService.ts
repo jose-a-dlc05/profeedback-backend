@@ -52,11 +52,12 @@ class FeedbackService {
 
 	async updateFeedback(data: object, id: string) {
 		try {
-			let { title, category, status, description }: any = data;
+			let { title, category, status, description, upvotes }: any = data;
 			return await feedbackDAO.updateFeedback(
 				title,
 				category,
 				status,
+				upvotes,
 				description,
 				id
 			);
@@ -69,15 +70,6 @@ class FeedbackService {
 		try {
 			const feedbackId = id;
 			return await feedbackDAO.deleteFeedback(feedbackId);
-		} catch (err) {
-			console.error(err);
-		}
-	}
-
-	async upvoteFeedback(id: string) {
-		try {
-			const feedbackId = id;
-			return await feedbackDAO.upvoteFeedback(feedbackId);
 		} catch (err) {
 			console.error(err);
 		}
