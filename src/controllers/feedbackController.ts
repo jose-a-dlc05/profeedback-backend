@@ -1,4 +1,3 @@
-// Import Service
 import feedbackService from '../services/FeedbackService';
 
 export default class FeedbackController {

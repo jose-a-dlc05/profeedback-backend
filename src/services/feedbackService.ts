@@ -1,4 +1,3 @@
-// import dao
 import feedbackDAO from '../dao/Feedback';
 
 export default class FeedbackService {
