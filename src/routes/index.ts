@@ -1,9 +1,8 @@
 import express from 'express';
 import Auth from '../middleware/Auth';
-// Import controller
-const FeedbackController = require('../controllers/feedbackController');
-const UserController = require('../controllers/UserController');
-const CommentController = require('../controllers/CommentController');
+import FeedbackController from '../controllers/FeedbackController';
+import UserController from '../controllers/UserController';
+import CommentController from '../controllers/CommentController';
 
 const router = express.Router();
 

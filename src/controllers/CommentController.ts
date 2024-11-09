@@ -1,13 +1,13 @@
 import CommentService from '../services/CommentService';
 
-class CommentController {
+export default class CommentController {
 	/**
 	 * Create Comment
 	 * @params {object} req
 	 * @params {object} res
 	 * @returns {object} CommentController object
 	 */
-	createComment = async (req: any, res: any) => {
+	static createComment = async (req: any, res: any) => {
 		try {
 			if (!req.body.comment || !req.params.id || !req.user.id) {
 				return res.status(400).send({ message: 'There is no value' });
@@ -26,5 +26,3 @@ class CommentController {
 		}
 	};
 }
-
-module.exports = new CommentController();

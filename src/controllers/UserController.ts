@@ -2,14 +2,14 @@
 import Helper from '../controllers/Helper';
 import UserService from '../services/UserService';
 
-class UserController {
+export default class UserController {
 	/**
 	 * Create A User
 	 * @param {object} req
 	 * @param {object} res
 	 * @returns {object} UserController object
 	 */
-	createUser = async (req: any, res: any) => {
+	static createUser = async (req: any, res: any) => {
 		try {
 			if (!req.body.user || !req.body.password) {
 				return res.status(400).send({ message: 'Some values are missing' });
@@ -28,7 +28,7 @@ class UserController {
 	 * @param {object} res
 	 * @returns {object} user object
 	 */
-	loginUser = async (req: any, res: any) => {
+	static loginUser = async (req: any, res: any) => {
 		try {
 			if (!req.body.user || !req.body.password) {
 				return res.status(400).send({ message: 'Some values are missing' });
@@ -51,5 +51,3 @@ class UserController {
 		}
 	};
 }
-
-module.exports = new UserController();

@@ -3,8 +3,8 @@ const db = require('../config/db/db');
 import { v4 as uuidv4 } from 'uuid';
 
 // create a class called FeedbackDAO and create methods with queries on accessing db:
-class FeedbackDAO {
-	async getFeedback() {
+export default class FeedbackDAO {
+	static async getFeedback() {
 		const knex = await db;
 		return await knex
 			.default('product_feedback')
@@ -37,7 +37,7 @@ class FeedbackDAO {
 			);
 	}
 
-	async getSingleFeedback(id: string) {
+	static async getSingleFeedback(id: string) {
 		const productFeedbackId: string = id;
 		const knex = await db;
 		return await knex
@@ -46,7 +46,7 @@ class FeedbackDAO {
 			.where('id', productFeedbackId);
 	}
 
-	async getSingleFeedbackComments(id: string) {
+	static async getSingleFeedbackComments(id: string) {
 		const productFeedbackId: string = id;
 		const knex = await db;
 		const comments = await knex
@@ -63,7 +63,7 @@ class FeedbackDAO {
 		return comments;
 	}
 
-	async createFeedback(
+	static async createFeedback(
 		feedbackTitle: string,
 		category: string,
 		feedbackDetail: string
@@ -79,7 +79,7 @@ class FeedbackDAO {
 		});
 	}
 
-	async updateFeedback(
+	static async updateFeedback(
 		title: string,
 		category: string,
 		status: string,
@@ -97,14 +97,9 @@ class FeedbackDAO {
 		});
 	}
 
-	async deleteFeedback(id: string) {
+	static async deleteFeedback(id: string) {
 		const feedbackId: string = id;
 		const knex = await db;
 		return await knex.default('product_feedback').where('id', feedbackId).del();
 	}
 }
-
-// createFeedback(title, category, description)
-
-// export feedbackDAO
-module.exports = new FeedbackDAO();

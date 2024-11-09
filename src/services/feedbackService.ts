@@ -1,8 +1,8 @@
 // import dao
-const feedbackDAO = require('../dao/feedback');
+import feedbackDAO from '../dao/Feedback';
 
-class FeedbackService {
-	async getFeedback() {
+export default class FeedbackService {
+	static async getFeedback() {
 		try {
 			return await feedbackDAO.getFeedback();
 		} catch (err) {
@@ -10,7 +10,7 @@ class FeedbackService {
 		}
 	}
 
-	async getSingleFeedback(id: string) {
+	static async getSingleFeedback(id: string) {
 		try {
 			const feedbackId = id;
 			return await feedbackDAO.getSingleFeedback(feedbackId);
@@ -19,7 +19,7 @@ class FeedbackService {
 		}
 	}
 
-	async getSingleFeedbackComments(id: string) {
+	static async getSingleFeedbackComments(id: string) {
 		try {
 			const feedbackId = id;
 			const comments = await feedbackDAO.getSingleFeedbackComments(feedbackId);
@@ -33,7 +33,7 @@ class FeedbackService {
 		}
 	}
 
-	async createFeedback(data: object) {
+	static async createFeedback(data: object) {
 		try {
 			let {
 				feedback_title: feedbackTitle,
@@ -50,7 +50,7 @@ class FeedbackService {
 		}
 	}
 
-	async updateFeedback(data: object, id: string) {
+	static async updateFeedback(data: object, id: string) {
 		try {
 			let { title, category, status, description, upvotes }: any = data;
 			return await feedbackDAO.updateFeedback(
@@ -66,7 +66,7 @@ class FeedbackService {
 		}
 	}
 
-	async deleteFeedback(id: string) {
+	static async deleteFeedback(id: string) {
 		try {
 			const feedbackId = id;
 			return await feedbackDAO.deleteFeedback(feedbackId);
@@ -75,5 +75,3 @@ class FeedbackService {
 		}
 	}
 }
-
-module.exports = new FeedbackService();

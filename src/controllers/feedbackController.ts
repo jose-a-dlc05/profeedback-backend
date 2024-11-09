@@ -1,16 +1,15 @@
 // Import Service
-const feedbackService = require('../services/feedbackService');
+import feedbackService from '../services/FeedbackService';
 
-class FeedbackController {
-	getFeedback = async (req: any, res: any) => {
+export default class FeedbackController {
+	static getFeedback = async (req: any, res: any) => {
 		try {
-			console.log('controller: getFeedback');
 			return res.status(200).json(await feedbackService.getFeedback());
 		} catch (err) {
 			console.error(err);
 		}
 	};
-	getSingleFeedback = async (req: any, res: any) => {
+	static getSingleFeedback = async (req: any, res: any) => {
 		try {
 			const id = req.params.id;
 			return res.status(200).json(await feedbackService.getSingleFeedback(id));
@@ -18,7 +17,7 @@ class FeedbackController {
 			console.error(err);
 		}
 	};
-	getSingleFeedbackComments = async (req: any, res: any) => {
+	static getSingleFeedbackComments = async (req: any, res: any) => {
 		try {
 			const id = req.params.id;
 			return res
@@ -28,7 +27,7 @@ class FeedbackController {
 			console.error(err);
 		}
 	};
-	createFeedback = async (req: any, res: any) => {
+	static createFeedback = async (req: any, res: any) => {
 		try {
 			const postData = req.body;
 			await feedbackService.createFeedback(postData);
@@ -37,7 +36,7 @@ class FeedbackController {
 			console.error(err);
 		}
 	};
-	updateFeedback = async (req: any, res: any) => {
+	static updateFeedback = async (req: any, res: any) => {
 		try {
 			const id: string = req.params.id;
 			const postData = req.body;
@@ -47,7 +46,7 @@ class FeedbackController {
 			console.error(err);
 		}
 	};
-	deleteFeedback = async (req: any, res: any) => {
+	static deleteFeedback = async (req: any, res: any) => {
 		try {
 			const id: string = req.params.id;
 			await feedbackService.deleteFeedback(id);
@@ -57,5 +56,3 @@ class FeedbackController {
 		}
 	};
 }
-
-module.exports = new FeedbackController();
