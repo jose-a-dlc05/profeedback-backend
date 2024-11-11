@@ -29,8 +29,8 @@ export default class FeedbackController {
 	static createFeedback = async (req: any, res: any) => {
 		try {
 			const postData = req.body;
-			await feedbackService.createFeedback(postData);
-			return res.status(201).json(feedbackService.getFeedback());
+			const createdData = await feedbackService.createFeedback(postData);
+			return res.status(201).json(createdData);
 		} catch (err) {
 			console.error(err);
 		}
@@ -40,7 +40,7 @@ export default class FeedbackController {
 			const id: string = req.params.id;
 			const postData = req.body;
 			await feedbackService.updateFeedback(postData, id);
-			return res.status(200).json(await feedbackService.getFeedback());
+			return res.status(200).json(await feedbackService.getSingleFeedback(id));
 		} catch (err) {
 			console.error(err);
 		}
@@ -49,7 +49,7 @@ export default class FeedbackController {
 		try {
 			const id: string = req.params.id;
 			await feedbackService.deleteFeedback(id);
-			return res.status(204).send('Feedback Deleted');
+			return res.status(204).send(`Deleted feedback with id: ${id}`);
 		} catch (err) {
 			console.error(err);
 		}

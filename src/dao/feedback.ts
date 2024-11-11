@@ -1,66 +1,50 @@
-//import db
-const db = require('../config/db/db');
+import { createClient } from '@supabase/supabase-js';
 import { v4 as uuidv4 } from 'uuid';
 
-// create a class called FeedbackDAO and create methods with queries on accessing db:
+const supabaseUrl = process.env.SUPABASE_URL!;
+const supabaseKey = process.env.SUPABASE_KEY!;
+const supabase = createClient(supabaseUrl, supabaseKey);
+
 export default class FeedbackDAO {
 	static async getFeedback() {
-		const knex = await db;
-		return await knex
-			.default('product_feedback')
-			.leftJoin(
-				'comments',
-				'product_feedback.id',
-				'=',
-				'comments.product_feedback_id'
-			)
-			.select(
-				'product_feedback.id',
-				'product_feedback.title',
-				'product_feedback.category',
-				'product_feedback.upvotes',
-				'product_feedback.status',
-				'product_feedback.description',
-				'product_feedback.created_at',
-				'product_feedback.updated_at'
-			)
-			.count('comments.id as comments')
-			.groupBy(
-				'product_feedback.id',
-				'product_feedback.title',
-				'product_feedback.category',
-				'product_feedback.upvotes',
-				'product_feedback.status',
-				'product_feedback.description',
-				'product_feedback.created_at',
-				'product_feedback.updated_at'
-			);
+		try {
+			const { data } = await supabase.from('product_feedback').select('*');
+			return data;
+		} catch (error) {
+			if (error instanceof Error) {
+				console.error('Error fetching feedback:', error.message);
+			}
+		}
 	}
 
 	static async getSingleFeedback(id: string) {
-		const productFeedbackId: string = id;
-		const knex = await db;
-		return await knex
-			.default('product_feedback')
-			.select('id', 'title', 'category', 'upvotes', 'status', 'description')
-			.where('id', productFeedbackId);
+		try {
+			const productFeedbackId: string = id;
+			const { data } = await supabase
+				.from('product_feedback')
+				.select('*')
+				.eq('id', productFeedbackId);
+			return data;
+		} catch (error) {
+			if (error instanceof Error) {
+				console.error('Error fetching feedback:', error.message);
+			}
+		}
 	}
 
 	static async getSingleFeedbackComments(id: string) {
-		const productFeedbackId: string = id;
-		const knex = await db;
-		const comments = await knex
-			.default('comments')
-			.select(
-				'content',
-				'id',
-				'user_id',
-				'replying_to_user',
-				'parent_id',
-				'created_at'
-			)
-			.where('product_feedback_id', productFeedbackId);
-		return comments;
+		try {
+			const productFeedbackId: string = id;
+			const { data } = await supabase
+				.from('comments')
+				.select('*')
+				.eq('product_feedback_id', productFeedbackId);
+			return data;
+		} catch (error) {
+			if (error instanceof Error) {
+				console.error('Error fetching feedback:', error.message);
+			}
+		}
 	}
 
 	static async createFeedback(
@@ -68,15 +52,26 @@ export default class FeedbackDAO {
 		category: string,
 		feedbackDetail: string
 	) {
-		const knex = await db;
-		return await knex.default('product_feedback').insert({
-			id: uuidv4(),
-			title: feedbackTitle,
-			category,
-			upvotes: 0,
-			status: 'suggestion',
-			description: feedbackDetail,
-		});
+		try {
+			const { data } = await supabase
+				.from('product_feedback')
+				.insert([
+					{
+						id: uuidv4(),
+						title: feedbackTitle,
+						category,
+						upvotes: 0,
+						status: 'suggestion',
+						description: feedbackDetail,
+					},
+				])
+				.select('*');
+			return data;
+		} catch (error) {
+			if (error instanceof Error) {
+				console.error('Error creating feedback:', error.message);
+			}
+		}
 	}
 
 	static async updateFeedback(
@@ -87,19 +82,37 @@ export default class FeedbackDAO {
 		description: string,
 		id: string
 	) {
-		const knex = await db;
-		return await knex.default('product_feedback').where('id', id).update({
-			title,
-			category,
-			status,
-			upvotes,
-			description,
-		});
+		try {
+			const { data } = await supabase
+				.from('product_feedback')
+				.update([
+					{
+						id,
+						title,
+						category,
+						status,
+						upvotes,
+						description,
+					},
+				])
+				.eq('id', id)
+				.select();
+			return data;
+		} catch (error) {
+			if (error instanceof Error) {
+				console.error('Error updating feedback:', error.message);
+			}
+		}
 	}
 
 	static async deleteFeedback(id: string) {
 		const feedbackId: string = id;
-		const knex = await db;
-		return await knex.default('product_feedback').where('id', feedbackId).del();
+		try {
+			await supabase.from('product_feedback').delete().eq('id', feedbackId);
+		} catch (error) {
+			if (error instanceof Error) {
+				console.error('Error deleting feedback:', error.message);
+			}
+		}
 	}
 }

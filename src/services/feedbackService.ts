@@ -22,7 +22,7 @@ export default class FeedbackService {
 		try {
 			const feedbackId = id;
 			const comments = await feedbackDAO.getSingleFeedbackComments(feedbackId);
-			if (comments.length > 0) {
+			if (comments && comments.length > 0) {
 				return comments;
 			} else {
 				return 'No Comments for this feedback';

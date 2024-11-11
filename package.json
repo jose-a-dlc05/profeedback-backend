@@ -16,6 +16,7 @@
 	"author": "Jose De La Cruz",
 	"license": "ISC",
 	"dependencies": {
+		"@supabase/supabase-js": "^2.46.1",
 		"@types/node": "^16.7.10",
 		"bcrypt": "^5.0.1",
 		"core-util-is": "^1.0.3",
