@@ -1,4 +1,4 @@
-import db from '../config/db/db';
+import { devSupabase } from '../config/supabase/supaDB';
 import { v4 as uuidv4 } from 'uuid';
 
 class CommentDAO {
@@ -8,13 +8,14 @@ class CommentDAO {
 		feedbackId: string
 	) => {
 		try {
-			const knex = await db;
-			return await knex('comments').insert({
-				id: uuidv4(),
-				content: comment,
-				product_feedback_id: feedbackId,
-				user_id: userId,
-			});
+			return await devSupabase.from('comments').insert([
+				{
+					id: uuidv4(),
+					content: comment,
+					product_feedback_id: feedbackId,
+					user_id: userId,
+				},
+			]);
 		} catch (err) {
 			console.error(err);
 		}

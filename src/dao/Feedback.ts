@@ -1,14 +1,10 @@
-import { createClient } from '@supabase/supabase-js';
+import { devSupabase } from '../config/supabase/supaDB';
 import { v4 as uuidv4 } from 'uuid';
-
-const supabaseUrl = process.env.SUPABASE_URL!;
-const supabaseKey = process.env.SUPABASE_KEY!;
-const supabase = createClient(supabaseUrl, supabaseKey);
 
 export default class FeedbackDAO {
 	static async getFeedback() {
 		try {
-			const { data } = await supabase.from('product_feedback').select('*');
+			const { data } = await devSupabase.from('product_feedback').select('*');
 			return data;
 		} catch (error) {
 			if (error instanceof Error) {
@@ -20,7 +16,7 @@ export default class FeedbackDAO {
 	static async getSingleFeedback(id: string) {
 		try {
 			const productFeedbackId: string = id;
-			const { data } = await supabase
+			const { data } = await devSupabase
 				.from('product_feedback')
 				.select('*')
 				.eq('id', productFeedbackId);
@@ -35,7 +31,7 @@ export default class FeedbackDAO {
 	static async getSingleFeedbackComments(id: string) {
 		try {
 			const productFeedbackId: string = id;
-			const { data } = await supabase
+			const { data } = await devSupabase
 				.from('comments')
 				.select('*')
 				.eq('product_feedback_id', productFeedbackId);
@@ -53,7 +49,7 @@ export default class FeedbackDAO {
 		feedbackDetail: string
 	) {
 		try {
-			const { data } = await supabase
+			const { data } = await devSupabase
 				.from('product_feedback')
 				.insert([
 					{
@@ -83,7 +79,7 @@ export default class FeedbackDAO {
 		id: string
 	) {
 		try {
-			const { data } = await supabase
+			const { data } = await devSupabase
 				.from('product_feedback')
 				.update([
 					{
@@ -108,7 +104,7 @@ export default class FeedbackDAO {
 	static async deleteFeedback(id: string) {
 		const feedbackId: string = id;
 		try {
-			await supabase.from('product_feedback').delete().eq('id', feedbackId);
+			await devSupabase.from('product_feedback').delete().eq('id', feedbackId);
 		} catch (error) {
 			if (error instanceof Error) {
 				console.error('Error deleting feedback:', error.message);

@@ -29,6 +29,7 @@ router.post(['/', '/feedbackproduct'], FeedbackController.createFeedback);
 // Delete feedback from database
 router.delete(
 	['/:id', '/feedbackproduct/:id'],
+	Auth.verifyToken,
 	FeedbackController.deleteFeedback
 );
 // USER
