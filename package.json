@@ -3,7 +3,6 @@
 	"version": "1.0.0",
 	"description": "This will be the back end to a product feedback application ",
 	"main": "index.js",
-	"type": "module",
 	"scripts": {
 		"start": "node dist/index.js",
 		"postinstall": "tsc",
